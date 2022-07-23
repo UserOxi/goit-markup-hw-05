@@ -17,6 +17,9 @@
   --address-bg-cl: #2f303a;
   --btn-bg-cl: #f5f4fa;
   --btn-hover-cl: #188ce8;
+  --about-bg-cl: rgba(47, 48, 58, 0.8);
+  --overlay-bg-cl: rgba(33, 150, 243, 0.9);
+  --backdrop-bg-cl: rgba(0, 0, 0, 0.2);
 
   /* icon color */
   --icon-grey-cl: #afb1b8;
@@ -37,6 +40,9 @@
   /* card-set */
   --gap: 30px;
   --card-item: 4;
+
+  /* animate */
+  --hov-anim: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -195,6 +201,10 @@ ul {
   gap: 50px;
 }
 
+.nav-item {
+  position: relative;
+}
+
 .contacts-list {
   gap: 30px;
   margin-left: auto;
@@ -215,6 +225,20 @@ ul {
   color: var(--accent-txt-cl);
 }
 
+.link-current::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: block;
+  content: '';
+  width: 100%;
+  height: 4px;
+
+  border-radius: 2px;
+  background-color: var(--accent-txt-cl);
+}
+
 .header-contact-link {
   display: flex;
   align-items: center;
@@ -222,6 +246,11 @@ ul {
   gap: 10px;
 
   fill: currentColor;
+}
+
+.link-nav,
+.contact-link {
+  transition: color var(--hov-anim);
 }
 
 .link-nav:hover,
@@ -266,6 +295,8 @@ ul {
 }
 
 .btn-hero {
+  transition: background-color var(--hov-anim);
+
   min-width: 200px;
   padding: 10px 32px;
 
@@ -318,6 +349,29 @@ ul {
   --card-item: 3;
 }
 
+.about-item {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-top: 27px;
+  padding-bottom: 27px;
+
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  text-transform: uppercase;
+  color: var(--txt-light-cl);
+  background-color: var(--about-bg-cl);
+}
+
 /* Team */
 
 .team {
@@ -363,6 +417,8 @@ ul {
 }
 
 .social-link-team {
+  transition: background-color var(--hov-anim), fill var(--hov-anim);
+
   background-color: var(--txt-light-cl);
   fill: var(--icon-grey-cl);
 }
@@ -380,6 +436,8 @@ ul {
 }
 
 .client-link {
+  transition: fill var(--hov-anim), border var(--hov-anim);
+
   display: flex;
   min-height: 92px;
   align-items: center;
@@ -424,6 +482,8 @@ ul {
 }
 
 .address-link {
+  transition: color var(--hov-anim);
+
   color: var(--txt-light-cl);
 }
 
@@ -453,6 +513,8 @@ ul {
 }
 
 .social-link-footer {
+  transition: background-color var(--hov-anim);
+
   background-color: var(--social-bg-cl);
   fill: var(--txt-light-cl);
 }
@@ -460,6 +522,72 @@ ul {
 .social-link-footer:hover,
 .social-link-footer:focus {
   background-color: var(--accent-txt-cl);
+}
+
+/* Modal window */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  width: 100%;
+  height: 100%;
+
+  transition: opacity var(--hov-anim), visibility var(--hov-anim);
+
+  background-color: var(--backdrop-bg-cl);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  opacity: 1;
+  transform: translate(-50%, -50%) scaleX(1) rotate(0);
+
+  transition: transform 600ms ease, opacity 600ms ease;
+
+  width: 528px;
+  height: 581px;
+
+  background-color: var(--txt-light-cl);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.backdrop.is-hidden .modal {
+  opacity: 0;
+  transform: translate(-250%, 150%) scaleX(0.1) rotate(810deg);
+}
+
+.modal-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  background-color: var(--txt-light-cl);
+  fill: var(--logo-dark-cl);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* PORTFOLIO */
@@ -472,6 +600,8 @@ ul {
 }
 
 .btn-portfolio {
+  transition: color var(--hov-anim), background-color var(--hov-anim), box-shadow var(--hov-anim);
+
   padding: 6px 22px;
   min-width: 73px;
 
@@ -500,12 +630,43 @@ ul {
 }
 
 .portfolio-link {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  transform: translateY(100%);
+  transition: transform var(--hov-anim);
+
+  padding-top: 63px;
+  padding-bottom: 63px;
+  padding-right: 24px;
+  padding-left: 24px;
+
+  font-size: 18px;
+  line-height: 1.56;
+  color: var(--txt-light-cl);
+  background-color: var(--overlay-bg-cl);
 }
 
 .portfolio-link:hover,
 .portfolio-link:focus {
   box-shadow: var(--hov-portfolio-shadow);
+}
+
+.portfolio-link:hover .overlay {
+  transform: translateY(0);
 }
 
 .card-content-portfolio {
