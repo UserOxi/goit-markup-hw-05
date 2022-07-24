@@ -629,6 +629,12 @@ ul {
 .portfolio-link {
   display: flex;
   flex-direction: column;
+  transition: box-shadow var(--hov-anim);
+}
+
+.portfolio-link:hover,
+.portfolio-link:focus {
+  box-shadow: var(--hov-portfolio-shadow);
 }
 
 .card-box {
@@ -660,11 +666,6 @@ ul {
   line-height: 1.56;
   color: var(--txt-light-cl);
   background-color: var(--overlay-bg-cl);
-}
-
-.portfolio-link:hover,
-.portfolio-link:focus {
-  box-shadow: var(--hov-portfolio-shadow);
 }
 
 .portfolio-link:hover .overlay,
