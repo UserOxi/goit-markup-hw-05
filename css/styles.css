@@ -227,7 +227,7 @@ ul {
 
 .link-current::after {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
 
   display: block;
@@ -614,15 +614,11 @@ ul {
 }
 
 .btn-portfolio:hover,
-.btn-portfolio:focus {
-  color: var(--txt-light-cl);
-  background-color: var(--accent-txt-cl);
-  box-shadow: var(--hov-btn-portfolio);
-}
-
+.btn-portfolio:focus,
 .active-btn {
   color: var(--txt-light-cl);
   background-color: var(--accent-txt-cl);
+  box-shadow: var(--hov-btn-portfolio);
 }
 
 .portfolio-list {
@@ -647,7 +643,8 @@ ul {
   height: 100%;
 
   transform: translateY(100%);
-  transition: transform var(--hov-anim);
+  opacity: 0;
+  transition: transform var(--hov-anim), opacity var(--hov-anim);
 
   padding-top: 63px;
   padding-bottom: 63px;
@@ -665,8 +662,10 @@ ul {
   box-shadow: var(--hov-portfolio-shadow);
 }
 
-.portfolio-link:hover .overlay {
+.portfolio-link:hover .overlay,
+.portfolio-link:focus .overlay {
   transform: translateY(0);
+  opacity: 1;
 }
 
 .card-content-portfolio {
