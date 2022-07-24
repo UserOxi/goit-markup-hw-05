@@ -228,7 +228,7 @@ ul {
 
 .link-current::after {
   position: absolute;
-  bottom: 1px;
+  bottom: -1px;
   left: 0;
 
   display: block;
